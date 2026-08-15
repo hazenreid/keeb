@@ -1,0 +1,14 @@
+#!/bin/bash     
+real=`realpath $0`
+path=`dirname $real`
+
+function link_file {
+    src=$path/$1
+    dest=$2
+    ln -s -f $src $dest
+}
+
+mkdir -p ~/.local/bin
+
+link_file bin/edit.sh ~/.local/bin/keebedit
+link_file bin/build.sh ~/.local/bin/keebuild
