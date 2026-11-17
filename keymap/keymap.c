@@ -19,7 +19,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 			KC_ESC,  KC_B,    KC_L,    KC_Y,    KC_X,                      KC_DLR,  KC_F,    KC_O,    KC_U,    KC_P,
 			KC_M,    KC_A,    KC_N,    KC_I,    KC_J,                      KC_Z,    KC_R,    KC_E,    KC_H,    KC_T,
 			KC_C,    KC_G,    KC_K,    KC_D,    KC_Q,    _______, _______, KC_CIRC, KC_S,    KC_COMM, KC_V,    KC_W,
-			OS_LUI, OS_LALT, OS_LCTL, LOWER,   RAISE,   _______, _______, KC_SPC,  OS_LSFT, OS_RCTL, OS_RALT, OS_RGUI
+			OS_LGUI, OS_LALT, OS_LCTL, LOWER,   RAISE,   _______, _______, KC_SPC,  OS_LSFT, OS_RCTL, OS_RALT, OS_RGUI
 			),
 
 	[_LOWER] = LAYOUT(
@@ -48,15 +48,3 @@ const key_override_t del_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_BSPC, K
 const key_override_t *key_overrides[] = {
 	&del_key_override,
 };
-
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-	switch (keycode) {
-		case ADJUST:
-			if (record->event.pressed) {
-				layer_off(_LOWER);
-				layer_off(_RAISE);
-			}
-			break;
-	}
-	return true;
-}
