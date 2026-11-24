@@ -7,33 +7,34 @@ enum my_layers {
 	_ADJUST,
 };
 
-#define LOWER  OSL(_LOWER)
-#define RAISE  OSL(_RAISE)
-#define ADJUST OSL(_ADJUST)
-#define LANG   C(KC_SPC)
-#define TMUX   C(KC_B)
+#define LOWER    OSL(_LOWER)
+#define RAISE    OSL(_RAISE)
+#define ADJUST   MO(_ADJUST)
+#define TMUX_ADJ LT(_ADJUST, KC_B) // tap: Ctrl+B (tmux prefix), hold: ADJUST
+#define LANG     C(KC_SPC)
+#define TMUX     C(KC_B)
 
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[_BASE] = LAYOUT(
-			KC_P,    KC_M,    KC_D,    KC_Y,    KC_Q,                      KC_DLR,  KC_B,    KC_R,    KC_U,    KC_ESC,
-			KC_C,    KC_T,    KC_H,    KC_E,    KC_Z,                      KC_X,    KC_S,    KC_I,    KC_A,    KC_L,
-			KC_V,    KC_G,    KC_F,    KC_O,    KC_J,    _______, _______, KC_CIRC, KC_N,    KC_COMM, KC_K,    KC_W,
-			OS_LGUI, OS_LALT, OS_LCTL, LOWER,   RAISE,   _______, _______, KC_SPC,  OS_LSFT, OS_RCTL, OS_RALT, OS_RGUI
+			KC_B,    KC_U,    KC_O,    KC_F,    KC_CIRC,                   KC_Z,    KC_M,    KC_L,    KC_G,    KC_V,
+			KC_R,    KC_I,    KC_E,    KC_N,    KC_AT,                     KC_J,    KC_A,    KC_T,    KC_SPC,  KC_D,
+			KC_W,    KC_X,    KC_Y,    KC_S,    LANG,    _______, _______, KC_Q,    KC_H,    KC_K,    KC_C,    KC_P,
+			OS_LGUI, OS_LALT, OS_LCTL, OS_LSFT, LOWER,   _______, _______, RAISE,   OS_LSFT, OS_RCTL, OS_RALT, OS_RGUI
 			),
 
 	[_LOWER] = LAYOUT(
 			KC_HOME, KC_PGDN, KC_PGUP, KC_END,  _______,                   KC_SLSH, KC_7,    KC_8,    KC_9,    KC_MINS,
 			KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______,                   KC_ASTR, KC_4,    KC_5,    KC_6,    KC_PLUS,
-			KC_TAB,  KC_BSPC, LANG,    KC_ENT,  _______, _______, _______, KC_DOT,  KC_1,    KC_2,    KC_3,    KC_0,
-			_______, _______, _______, _______, ADJUST,  _______, _______, _______, _______, _______, _______, _______
+			KC_TAB,  KC_BSPC, KC_ESC,  KC_ENT,  _______, _______, _______, KC_DOT,  KC_1,    KC_2,    KC_3,    KC_0,
+			_______, _______, _______, _______, _______, _______, _______, TMUX_ADJ,_______, _______, _______, _______
 			),
 
 	[_RAISE] = LAYOUT(
-			KC_GRV,  KC_LT,   KC_GT,   KC_COLN, KC_TILD,                   KC_AMPR, KC_PIPE, KC_PLUS, KC_ASTR, KC_QUES,
-			KC_QUOT, KC_LPRN, KC_RPRN, KC_SCLN, KC_BSLS,                   KC_HASH, KC_EQL,  KC_UNDS, KC_DOT,  KC_DQT,
-			KC_LCBR, KC_LBRC, KC_RBRC, KC_RCBR, KC_AT,   _______, _______, KC_PERC, KC_MINS, TMUX,    KC_SLSH, KC_EXLM,
-			_______, _______, _______, ADJUST,  _______, _______, _______, KC_BSPC, KC_ENT,  _______, _______, _______
+			KC_BSLS, KC_LCBR, KC_RCBR, KC_SLSH, KC_GRV,                    KC_PERC, KC_PIPE, KC_AMPR, KC_ASTR, KC_QUES,
+			KC_LT,   KC_LPRN, KC_RPRN, KC_SCLN, KC_HASH,                   KC_DLR,  KC_COLN, KC_COMM, KC_UNDS, KC_GT,
+			KC_EXLM, KC_MINS, KC_EQL,  KC_DOT,  KC_PLUS, _______, _______, KC_TILD, KC_DQT,  KC_LBRC, KC_RBRC, KC_QUOT,
+			_______, _______, _______, _______, ADJUST,  _______, _______, _______, _______, _______, _______, _______
 			),
 
 	[_ADJUST] = LAYOUT(
@@ -43,6 +44,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 			_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
 			),
 };
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+	switch (keycode) {
+		case TMUX_ADJ:
+			// LT() can only tap basic keycodes, so send Ctrl+B ourselves on tap.
+			if (record->tap.count && record->event.pressed) {
+				tap_code16(TMUX);
+				return false;
+			}
+			break;
+	}
+	return true;
+}
 
 const key_override_t del_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_BSPC, KC_DEL);
 const key_override_t *key_overrides[] = {
