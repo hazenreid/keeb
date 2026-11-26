@@ -18,15 +18,15 @@ enum my_layers {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[_BASE] = LAYOUT(
 			KC_B,    KC_U,    KC_O,    KC_F,    KC_CIRC,                   KC_Z,    KC_M,    KC_L,    KC_G,    KC_V,
-			KC_R,    KC_I,    KC_E,    KC_N,    KC_AT,                     KC_J,    KC_A,    KC_T,    KC_SPC,  KC_D,
-			KC_W,    KC_X,    KC_Y,    KC_S,    LANG,    _______, _______, KC_Q,    KC_H,    KC_K,    KC_C,    KC_P,
+			KC_R,    KC_I,    KC_E,    KC_N,    LANG,                      KC_J,    KC_A,    KC_T,    KC_SPC,  KC_D,
+			KC_W,    KC_X,    KC_Y,    KC_S,    KC_AT,   _______, _______, KC_Q,    KC_H,    KC_K,    KC_C,    KC_P,
 			OS_LGUI, OS_LALT, OS_LCTL, OS_LSFT, LOWER,   _______, _______, RAISE,   OS_LSFT, OS_RCTL, OS_RALT, OS_RGUI
 			),
 
 	[_LOWER] = LAYOUT(
 			KC_HOME, KC_PGDN, KC_PGUP, KC_END,  _______,                   KC_SLSH, KC_7,    KC_8,    KC_9,    KC_MINS,
-			KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______,                   KC_ASTR, KC_4,    KC_5,    KC_6,    KC_PLUS,
-			KC_TAB,  KC_BSPC, KC_ESC,  KC_ENT,  _______, _______, _______, KC_DOT,  KC_1,    KC_2,    KC_3,    KC_0,
+			KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, DM_PLY2,                   KC_ASTR, KC_4,    KC_5,    KC_6,    KC_PLUS,
+			KC_TAB,  KC_BSPC, KC_ESC,  KC_ENT,  DM_PLY1, _______, _______, KC_DOT,  KC_1,    KC_2,    KC_3,    KC_0,
 			_______, _______, _______, _______, _______, _______, _______, TMUX_ADJ,_______, _______, _______, _______
 			),
 
@@ -38,9 +38,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 			),
 
 	[_ADJUST] = LAYOUT(
-			KC_MUTE, KC_BRID, KC_BRIU, KC_MPLY, _______,                   KC_INS,  KC_F7,   KC_F8,   KC_F9,   KC_F12,
-			KC_MRWD, KC_VOLD, KC_VOLU, KC_MFFD, _______,                   KC_CAPS, KC_F4,   KC_F5,   KC_F6,   KC_F11,
-			_______, _______, _______, _______, _______, _______, _______, KC_DEL,  KC_F1,   KC_F2,   KC_F3,   KC_F10,
+			KC_MUTE, KC_BRID, KC_BRIU, KC_MPLY, DM_RSTP,                   KC_INS,  KC_F7,   KC_F8,   KC_F9,   KC_F12,
+			KC_MRWD, KC_VOLD, KC_VOLU, KC_MFFD, DM_REC2,                   KC_CAPS, KC_F4,   KC_F5,   KC_F6,   KC_F11,
+			_______, _______, _______, _______, DM_REC1, _______, _______, KC_DEL,  KC_F1,   KC_F2,   KC_F3,   KC_F10,
 			_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
 			),
 };
